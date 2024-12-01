@@ -1,120 +1,130 @@
 class CharacterSheet extends HTMLElement {
-    #abilityScores = {
-        STR: [12, 1],
-        DEX: [16, 3],
-        CON: [14, 2],
-        INT: [12, 1],
-        WIS: [13, 1],
-        CHA: [10, 0],
-    };
-    
-    set abilityScores (abilityScores) { this.#abilityScores = abilityScores; }
-    
-    get abilityScores () { return this.#abilityScores; }
+  //#region props
+  #abilityScores = {
+    STR: [12, 1],
+    DEX: [16, 3],
+    CON: [14, 2],
+    INT: [12, 1],
+    WIS: [13, 1],
+    CHA: [10, 0],
+  };
 
-    // ""  no proficiency
-    // "H" half proficiency
-    // "P" proficiency
-    // "E" expertise
+  set abilityScores(abilityScores) {
+    this.#abilityScores = abilityScores;
+  }
 
-    #skills = {
-        acrobatics: ['P', 'DEX', 7],
-        animalHandling: ['P', 'WIS', 5],
-        arcana: ['', 'INT', 1],
-        athletics: ['', 'STR', 1],
-        deception: ['', 'CHA', 0],
-        history: ['P', 'INT', 5],
-        insight: ['', 'WIS', 1],
-        intimidation: ['', 'CHA', 0],
-        investigation: ['E', 'INT', 9],
-        medicine: ['', 'WIS', 1],
-        nature: ['E', 'INT', 9],
-        perception: ['E', 'WIS', 9],
-        performance: ['', 'CHA', 0],
-        persuasion: ['', 'CHA', 0],
-        religion: ['', 'INT', 1],
-        sleightOfHand: ['E', 'DEX', 11],
-        stealth: ['E', 'DEX', 11],
-        survival: ['E', 'WIS', 9],
-    };
+  get abilityScores() {
+    return this.#abilityScores;
+  }
 
-    set skills (skills) { this.#skills = skills; }
-    
-    get skills () { return this.#skills; }
+  // ""  no proficiency
+  // "H" half proficiency
+  // "P" proficiency
+  // "E" expertise
 
-    #species = 'half-elf';
+  #skills = {
+    acrobatics: ['P', 'DEX', 7],
+    animalHandling: ['P', 'WIS', 5],
+    arcana: ['', 'INT', 1],
+    athletics: ['', 'STR', 1],
+    deception: ['', 'CHA', 0],
+    history: ['P', 'INT', 5],
+    insight: ['', 'WIS', 1],
+    intimidation: ['', 'CHA', 0],
+    investigation: ['E', 'INT', 9],
+    medicine: ['', 'WIS', 1],
+    nature: ['E', 'INT', 9],
+    perception: ['E', 'WIS', 9],
+    performance: ['', 'CHA', 0],
+    persuasion: ['', 'CHA', 0],
+    religion: ['', 'INT', 1],
+    sleightOfHand: ['E', 'DEX', 11],
+    stealth: ['E', 'DEX', 11],
+    survival: ['E', 'WIS', 9],
+  };
 
-    // dwarf
-    // elve
-    // human
-    // gnomi
-    // insetti
-    // draconidi
-    // goliat
-    // orchi
-    // tifling
-    // centauri
+  set skills(skills) {
+    this.#skills = skills;
+  }
 
-    #classe = {
-        guerriero: 5,
-        ladro: 6,
-    }
-    
-    // [
-    //     'barbaro',
-    //     'bardo',
-    //     'chierico',
-    //     'druido',
-    //     'guerriero',
-    //     'monaco',
-    //     'maestro',
-    //     'paladino',
-    //     'ranger',
-    //     'ladro',
-    //     'stregone',
-    //     'warlock',
-    //     'wizard',
-    //     'artificiere',
-    // ];
+  get skills() {
+    return this.#skills;
+  }
 
-    #proficiency = 4;
+  #species = 'half-elf';
 
-    #initiative = 3;
+  // dwarf
+  // elve
+  // human
+  // gnomi
+  // insetti
+  // draconidi
+  // goliat
+  // orchi
+  // tifling
+  // centauri
 
-    #armorClass = 14;
+  #classe = {
+    guerriero: 5,
+    ladro: 6,
+  };
 
-    #hp = 60;
+  // [
+  //     'barbaro',
+  //     'bardo',
+  //     'chierico',
+  //     'druido',
+  //     'guerriero',
+  //     'monaco',
+  //     'maestro',
+  //     'paladino',
+  //     'ranger',
+  //     'ladro',
+  //     'stregone',
+  //     'warlock',
+  //     'wizard',
+  //     'artificiere',
+  // ];
 
-    #speed = 30;
+  #proficiency = 4;
 
-    static observedAttributes = [
-        'class'
-    ];
+  #initiative = 3;
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log({
-            name,
-            oldValue,
-            newValue
-        })
-    }
+  #armorClass = 14;
 
-    connectedCallback() {
-        console.log('connected callback');
-    }
+  #hp = 60;
 
-    disconnectedCallback() {
-        console.log('disconnected callback');
-    }
+  #speed = 30;
+  //#endregion
 
-    adoptedCallback() {
-        console.log('adopted callback');
-    }
+  constructor() {
+    super();
+    this.innerHTML = 'ciao';
+  }
 
-    constructor() {
-        super();
-        this.innerHTML = 'ciao';
-    }
+  //#region lifecycle
+  static observedAttributes = ['class'];
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    console.log({
+      name,
+      oldValue,
+      newValue,
+    });
+  }
+
+  connectedCallback() {
+    console.log('connected callback');
+  }
+
+  disconnectedCallback() {
+    console.log('disconnected callback');
+  }
+
+  adoptedCallback() {
+    console.log('adopted callback');
+  }
+  //#endregion
 }
 
 customElements.define('character-sheet', CharacterSheet);
