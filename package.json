@@ -1,0 +1,29 @@
+{
+  "name": "character-sheet-generator",
+  "version": "0.0.1",
+  "description": "Dungeons & Debuggers - Character Sheet Generator",
+  "repository": "git@github.com:dungeons-and-debuggers/character-sheet-generator.git",
+  "author": "Dungeons & Debuggers (https://github.com/dungeons-and-debuggers)",
+  "contributors": [
+    "Simone Gentili <sensorario@gmail.com>",
+    "Emiliano Pisu <pisuemiliano.1980@gmail.com>"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "clear:cache": "rm -rf .parcel-cache dist",
+    "clear": "yarn clear:cache && rm -rf node_modules yarn.lock",
+    "reset": "yarn clear && yarn",
+    "reset:dev": "node --experimental-modules ./workspaces.js && yarn reset && rm -rf package.json && mv package.json.old package.json",
+    "serve": "parcel ./src/index.html -p 6001",
+    "serve:dev": "yarn serve",
+    "serve:prod": "NODE_ENV=production parcel ./src/index.html -p 6001",
+    "restart": "yarn clear:cache && yarn serve",
+    "build": "yarn clear:cache && NODE_ENV=development parcel build ./src/index.html",
+    "build:dev": "yarn build",
+    "build:prod": "yarn clear:cache && parcel build ./src/index.html"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "devDependencies": {
+    "parcel": "2.13.2"
+  }
+}
