@@ -99,7 +99,38 @@ class CharacterSheet extends HTMLElement {
 
   constructor() {
     super();
-    this.innerHTML = 'ciao';
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>skill</th>
+          <th>expertise</th>
+          <th>ability</th>
+          <th>bonus</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${Object.entries(this.skills)
+          .map(
+            ([skill, [expertise, ability, bonus]]) => `
+          <tr>
+            <th>${skill}</th>
+            <th>${expertise}</th>
+            <th>${ability}</th>
+            <th>${bonus}</th>
+          </tr>
+        `
+          )
+          .join('')}
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
+    `;
   }
 
   //#region lifecycle
