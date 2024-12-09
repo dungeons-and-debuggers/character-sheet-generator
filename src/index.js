@@ -1,55 +1,15 @@
+import { createState, state } from './state.js';
+
+// @ts-ignore
+self.state = state;
+
 class CharacterSheet extends HTMLElement {
   //#region props
-  #abilityScores = {
-    STR: [12, 1],
-    DEX: [16, 3],
-    CON: [14, 2],
-    INT: [12, 1],
-    WIS: [13, 1],
-    CHA: [10, 0],
-  };
-
-  set abilityScores(abilityScores) {
-    this.#abilityScores = abilityScores;
-  }
-
-  get abilityScores() {
-    return this.#abilityScores;
-  }
 
   // ""  no proficiency
   // "H" half proficiency
   // "P" proficiency
   // "E" expertise
-
-  #skills = {
-    acrobatics: ['P', 'DEX', 7],
-    animalHandling: ['P', 'WIS', 5],
-    arcana: ['', 'INT', 1],
-    athletics: ['', 'STR', 1],
-    deception: ['', 'CHA', 0],
-    history: ['P', 'INT', 5],
-    insight: ['', 'WIS', 1],
-    intimidation: ['', 'CHA', 0],
-    investigation: ['E', 'INT', 9],
-    medicine: ['', 'WIS', 1],
-    nature: ['E', 'INT', 9],
-    perception: ['E', 'WIS', 9],
-    performance: ['', 'CHA', 0],
-    persuasion: ['', 'CHA', 0],
-    religion: ['', 'INT', 1],
-    sleightOfHand: ['E', 'DEX', 11],
-    stealth: ['E', 'DEX', 11],
-    survival: ['E', 'WIS', 9],
-  };
-
-  set skills(skills) {
-    this.#skills = skills;
-  }
-
-  get skills() {
-    return this.#skills;
-  }
 
   #species = 'half-elf';
 
@@ -99,10 +59,33 @@ class CharacterSheet extends HTMLElement {
 
   constructor() {
     super();
+    this.#state = createState(state);
     this.render();
+
+    // @todo implementare slot come con lo shadow dom ma senza lo shadow dom
+
+    document.addEventListener('state.change', (e) => {
+      this.render();
+      console.log(e);
+    });
   }
 
-  render() {
+  #state;
+
+  render(rows = '') {
+    // @todo fare render con dom-diffing
+    for (const skill in this.#state.skills) {
+      const [expertise, ability, bonus] = this.#state.skills[skill];
+      rows += `
+      <tr>
+        <th>${skill}</th>
+        <th>${expertise}</th>
+        <th>${ability}</th>
+        <th>${bonus}</th>
+      </tr>
+    `;
+    }
+
     this.innerHTML = `
     <table>
       <thead>
@@ -114,18 +97,7 @@ class CharacterSheet extends HTMLElement {
         </tr>
       </thead>
       <tbody>
-        ${Object.entries(this.skills)
-          .map(
-            ([skill, [expertise, ability, bonus]]) => `
-          <tr>
-            <th>${skill}</th>
-            <th>${expertise}</th>
-            <th>${ability}</th>
-            <th>${bonus}</th>
-          </tr>
-        `
-          )
-          .join('')}
+        ${rows}
       </tbody>
       <tfoot>
       </tfoot>
@@ -146,6 +118,7 @@ class CharacterSheet extends HTMLElement {
 
   connectedCallback() {
     console.log('connected callback');
+    // @todo vedere perché non va bene agganciare eventi
   }
 
   disconnectedCallback() {
