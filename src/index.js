@@ -3,6 +3,7 @@ import { createState, state } from './state.js';
 // @ts-ignore
 self.state = state;
 
+// @todo rifare con React
 class CharacterSheet extends HTMLElement {
   //#region props
 
